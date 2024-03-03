@@ -2,46 +2,42 @@ import React, { useEffect, useState } from 'react';
 import './App.css';
 import axios from 'axios';
 
-type contentProps = {
+type Post = {
   userId:number,
   id:number,
   title:string,
-  body:string
+  body:string,
 }
 
+const API_URL = 'https://jsonplaceholder.typicode.com/posts'
+
+const MAX_POSTS = 10
+
 function App() {
-  const [content, setContent] = useState([])
-  const [list, setList] = useState([])
 
-  let maxIdInPage:number = 10;
-  const changePage = (maxIdInPage) => {
-
-    setList(currentList(maxIdInPage))
-  }
-
-  const currentList:any = (maxIdInPage) => content.filter(({userId, id, title, body}:contentProps) => id <= maxIdInPage && id >= maxIdInPage - 10).map(({userId, id, title, body}:contentProps) => <p key={id} >{id}</p>)
+  const [posts, setPosts] = useState<Post[]>([])
+  const [page, setPage] = useState(1)
 
   useEffect(() => {
-    async function getData() {
-      await axios.get('https://jsonplaceholder.typicode.com/posts')
-      .then((response) => setContent(response.data))
+    function getData() {
+      axios.get(`${API_URL}?_page=${page}&_per_page`)
+      .then(({data}:{data:Post[]}) => setPosts(data))
     }
     getData()
-    setList(currentList)
-  }, [])
-
-  console.log(content)
-  console.log(list)
+  }, [page])
 
   return (
     <div className="App">
       <h1>Get content</h1>
       <div className='container-content'>
-        {list}
+        <ul>
+          {posts.map((post) => <li key={post.id}>{post.id}</li> )}
+        </ul>
       </div>
-      <div>
-        <button className="button" onClick={() => changePage(maxIdInPage)}>Previous</button>
-        <button className="button" onClick={() => changePage(maxIdInPage)}>Next</button>
+      <div style={{display:'flex', justifyContent: 'center'}}>
+        {page > 1 && <button className="button" onClick={() => setPage(page - 1)}>Previous</button> }
+        <p>Current page {page}</p>
+        {page < posts.length && <button className="button" onClick={() => setPage(page + 1)}>Next</button> }
       </div>
     </div>
   );
