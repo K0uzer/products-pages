@@ -12,7 +12,7 @@ type Post = {
 const API_URL = 'https://jsonplaceholder.typicode.com/posts'
 
 const App = () => {
-    const [posts, setPosts] = useState<Post[]>([])
+    let [posts, setPosts] = useState<Post[]>([])
     const [page, setPage] = useState(1)
 
     useEffect(() => {
