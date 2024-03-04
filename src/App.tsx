@@ -12,7 +12,7 @@ type Post = {
 const API_URL = 'https://jsonplaceholder.typicode.com/posts'
 
 const App = () => {
-    let [posts, setPosts] = useState<Post[]>([])
+    const [posts, setPosts] = useState<Post[]>([])
     const [page, setPage] = useState(1)
 
     useEffect(() => {
@@ -27,9 +27,9 @@ const App = () => {
     }, [page])
 
     return (
-        <div className='App'>
+        <div className="App">
             <h1>Get content</h1>
-            <div className='container-content'>
+            <div className="container-content">
                 <ul>
                     {posts.map((post) => (
                         <li key={post.id}>{post.id}</li>
@@ -44,7 +44,7 @@ const App = () => {
             >
                 {page !== 1 && (
                     <button
-                        className='button'
+                        className="button"
                         onClick={() => setPage(1)}
                     >
                         First
@@ -52,7 +52,7 @@ const App = () => {
                 )}
                 {page > 1 && (
                     <button
-                        className='button'
+                        className="button"
                         onClick={() => setPage(page - 1)}
                     >
                         Previous
@@ -61,7 +61,7 @@ const App = () => {
                 <p>Current page {page}</p>
                 {page < posts.length && (
                     <button
-                        className='button'
+                        className="button"
                         onClick={() => setPage(page + 1)}
                     >
                         Next
@@ -69,7 +69,7 @@ const App = () => {
                 )}
                 {page !== posts.length && (
                     <button
-                        className='button'
+                        className="button"
                         onClick={() =>
                             setPage(posts.length)
                         }
