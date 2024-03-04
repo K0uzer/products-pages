@@ -3,5 +3,9 @@
     "cSpell.enableFiletypes": [
         "xml",
         "xsl"
+    ],
+    "cSpell.words": [
+        "posts",
+        "prettier"
     ]
 }
